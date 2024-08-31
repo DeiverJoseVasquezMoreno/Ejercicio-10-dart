@@ -1,125 +1,176 @@
-import 'package:flutter/material.dart';
+import 'package:dart/src/enums/e_main.dart';
+import 'package:dart/src/models/m_main.dart';
 
 void main() {
-  runApp(const MyApp());
-}
+  // Crear perfiles para los usuarios
+  Profile profile1 = Profile(
+    websiteURL: "http://user1.com",
+    location: "City A",
+    dateOfBirth: DateTime.now(),
+    photo: "photo1.jpg",
+    description: "User 1 Description",
+  );
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  Profile profile2 = Profile(
+    websiteURL: "http://user2.com",
+    location: "City B",
+    dateOfBirth: DateTime.now(),
+    photo: "photo2.jpg",
+    description: "User 2 Description",
+  );
 
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a purple toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  // Crear algunos usuarios
+  User user1 = User(
+    username: "user1",
+    password: "pass1",
+    email: "user1@example.com",
+    phone: "123456789",
+    websiteURL: "http://user1.com",
+    location: "City A",
+    dateOfBirth: DateTime.now(),
+    photo: "photo1.jpg",
+    description: "User 1 Description",
+    emailVerified: true,
+    active: true,
+    profile: profile1,
+    subscribedGroups: [],
+    articles: [],
+    sentMessages: [],
+    notifications: [],
+    bookmarks: [],
+  );
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  User user2 = User(
+    username: "user2",
+    password: "pass2",
+    email: "user2@example.com",
+    phone: "987654321",
+    websiteURL: "http://user2.com",
+    location: "City B",
+    dateOfBirth: DateTime.now(),
+    photo: "photo2.jpg",
+    description: "User 2 Description",
+    emailVerified: true,
+    active: true,
+    profile: profile2,
+    subscribedGroups: [],
+    articles: [],
+    sentMessages: [],
+    notifications: [],
+    bookmarks: [],
+  );
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+  // Crear algunos grupos y moderadores
+  Moderator mod1 = Moderator(managedGroups: []);
+  Group group1 = Group(
+    groupName: "Group 1",
+    creationDate: DateTime.now(),
+    memberCount: 100,
+    isSubgroup: false,
+    moderator: mod1,
+    subgroups: [],
+  );
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+  Moderator mod2 = Moderator(managedGroups: []);
+  Group group2 = Group(
+    groupName: "Group 2",
+    creationDate: DateTime.now(),
+    memberCount: 150,
+    isSubgroup: false,
+    moderator: mod2,
+    subgroups: [],
+  );
 
-  final String title;
+  mod1.managedGroups.add(group1);
+  mod2.managedGroups.add(group2);
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  // Subscribir usuarios a los grupos
+  user1.subscribedGroups.add(group1);
+  user2.subscribedGroups.add(group2);
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  // Crear algunos artículos
+  Article article1 = Article(
+    creationDate: DateTime.now(),
+    author: "User 1",
+    summary: "Summary 1",
+    content: "Content 1",
+    editorialStatus: EditorialStatus.sent,
+    comments: [],
+  );
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+  Article article2 = Article(
+    creationDate: DateTime.now(),
+    author: "User 2",
+    summary: "Summary 2",
+    content: "Content 2",
+    editorialStatus: EditorialStatus.approved,
+    comments: [],
+  );
 
-  @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  user1.articles.add(article1);
+  user2.articles.add(article2);
+
+  // Crear comentarios para los artículos
+  Comment comment1 = Comment(
+    author: "User 2",
+    date: DateTime.now(),
+    text: "Great article!",
+    editorialStatus: EditorialStatus.approved,
+  );
+
+  Comment comment2 = Comment(
+    author: "User 1",
+    date: DateTime.now(),
+    text: "Thanks for the feedback!",
+    editorialStatus: EditorialStatus.approved,
+  );
+
+  article1.comments.add(comment1);
+  article2.comments.add(comment2);
+
+  // Crear mensajes privados
+  PrivateMessage message1 = PrivateMessage(
+    sender: "User 1",
+    receiver: "User 2",
+    date: DateTime.now(),
+    content: "Hello, how are you?",
+  );
+
+  PrivateMessage message2 = PrivateMessage(
+    sender: "User 2",
+    receiver: "User 1",
+    date: DateTime.now(),
+    content: "I'm fine, thanks!",
+  );
+
+  user1.sentMessages.add(message1);
+  user2.sentMessages.add(message2);
+
+  // Crear notificaciones para los usuarios
+  Notification notification1 = Notification(
+    notificationType: "New Article",
+    seen: false,
+  );
+
+  Notification notification2 = Notification(
+    notificationType: "New Comment",
+    seen: false,
+  );
+
+  user1.notifications.add(notification1);
+  user2.notifications.add(notification2);
+
+  // Crear marcadores
+  Bookmark bookmark1 = Bookmark(article: article1);
+  Bookmark bookmark2 = Bookmark(article: article2);
+
+  user1.bookmarks.add(bookmark1);
+  user2.bookmarks.add(bookmark2);
+
+  // Imprimir algunos datos para demostrar las relaciones
+  print("User 1 is subscribed to: ${user1.subscribedGroups[0].groupName}");
+  print("User 2 is subscribed to: ${user2.subscribedGroups[0].groupName}");
+
+  print("User 1 posted an article with summary: ${user1.articles[0].summary}");
+  print("User 2 commented: ${article1.comments[0].text}");
 }
